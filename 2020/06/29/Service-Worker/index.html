@@ -20,19 +20,18 @@
     var CONFIG = {"hostname":"jackytpy.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="透過 service worker 我們可以達成訊息推播、離線處理等功能，這篇我只有提及離線處理的部分。">
+  <meta name="description" content="剛好工作上要處理一個服務的離線存取功能，於是花了一些時間研究了一下 Service Worker ，發現透過 Service Worker 我們可以達成訊息推播、離線處理等功能，但是這裡只有提到離線存取的功能，推播可能之後會再補一篇吧。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Service Worker">
+<meta property="og:title" content="Service Worker 離線支援">
 <meta property="og:url" content="https://jackytpy.github.io/2020/06/29/Service-Worker/index.html">
 <meta property="og:site_name" content="下午三點的落地窗">
-<meta property="og:description" content="透過 service worker 我們可以達成訊息推播、離線處理等功能，這篇我只有提及離線處理的部分。">
+<meta property="og:description" content="剛好工作上要處理一個服務的離線存取功能，於是花了一些時間研究了一下 Service Worker ，發現透過 Service Worker 我們可以達成訊息推播、離線處理等功能，但是這裡只有提到離線存取的功能，推播可能之後會再補一篇吧。">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/tt6CltV.png">
 <meta property="article:published_time" content="2020-06-29T05:30:31.000Z">
 <meta property="article:modified_time" content="2020-06-29T05:30:31.000Z">
 <meta property="article:author" content="Jacky Tseng">
 <meta property="article:tag" content="PWA">
-<meta property="article:tag" content="JS">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.imgur.com/tt6CltV.png">
@@ -50,7 +49,7 @@
   };
 </script>
 
-  <title>Service Worker | 下午三點的落地窗</title>
+  <title>Service Worker 離線支援 | 下午三點的落地窗</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-171046932-1"></script>
     <script>
@@ -193,7 +192,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Service Worker
+          Service Worker 離線支援
         </h1>
 
         <div class="post-meta">
@@ -226,7 +225,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>透過 service worker 我們可以達成訊息推播、離線處理等功能，這篇我只有提及離線處理的部分。</p>
+        <p>剛好工作上要處理一個服務的離線存取功能，於是花了一些時間研究了一下 Service Worker ，發現透過 Service Worker 我們可以達成訊息推播、離線處理等功能，但是這裡只有提到離線存取的功能，推播可能之後會再補一篇吧。</p>
 <a id="more"></a>
 
 <h1 id="生命週期"><a href="#生命週期" class="headerlink" title="生命週期"></a>生命週期</h1><center>
@@ -283,7 +282,6 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/PWA/" rel="tag"># PWA</a>
-              <a href="/tags/JS/" rel="tag"># JS</a>
               <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
           </div>
 
@@ -293,10 +291,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/06/29/Setting-PWA-in-Vue/" rel="prev" title="Setting PWA in Vue">
-      <i class="fa fa-chevron-left"></i> Setting PWA in Vue
+    <a href="/2020/06/29/Setting-PWA-in-Vue/" rel="prev" title="在 Vue 中設定 PWA">
+      <i class="fa fa-chevron-left"></i> 在 Vue 中設定 PWA
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/29/Detecting-a-mobile-browser/" rel="next" title="Detecting a mobile browser">
+      Detecting a mobile browser <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -371,7 +372,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -384,7 +385,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
