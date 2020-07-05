@@ -30,11 +30,11 @@
 <meta property="og:description" content="在工作上遇到前後端使用的邏輯套件不同，所以需要有一個方法把前端的 Kendo Filter 在後端轉換成 JsonLogic 存起來，於是就開始研究怎麼樣轉換比較好。 Github Repository">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2020-06-29T06:12:13.000Z">
-<meta property="article:modified_time" content="2020-06-29T06:12:13.000Z">
+<meta property="article:modified_time" content="2020-07-05T06:26:31.045Z">
 <meta property="article:author" content="Jacky Tseng">
-<meta property="article:tag" content="JavaScript">
-<meta property="article:tag" content="Kendo">
-<meta property="article:tag" content="JsonLogic">
+<meta property="article:tag" content="kendo">
+<meta property="article:tag" content=" jsonlogic">
+<meta property="article:tag" content=" translate">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://jackytpy.github.io/Kendo-Filter-to-JsonLogic-Interpretor/">
@@ -205,6 +205,13 @@
 
               <time title="創建時間：2020-06-29 14:12:13" itemprop="dateCreated datePublished" datetime="2020-06-29T14:12:13+08:00">2020-06-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-07-05 14:26:31" itemprop="dateModified" datetime="2020-07-05T14:26:31+08:00">2020-07-05</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -227,7 +234,7 @@
 
       
         <p>在工作上遇到前後端使用的邏輯套件不同，所以需要有一個方法把前端的 Kendo Filter 在後端轉換成 JsonLogic 存起來，於是就開始研究怎麼樣轉換比較好。</p>
-<p><a href="https://github.com/JackyTPY/KendoFilter2JsonLogic" target="_blank" rel="noopener">Github Repository</a></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0phY2t5VFBZL0tlbmRvRmlsdGVyMkpzb25Mb2dpYw==">Github Repository<i class="fa fa-external-link-alt"></i></span></p>
 <a id="more"></a>
 
 <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><h2 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h2><p>Input 是如下所示的 KendoFilter 巢狀條件結構:</p>
@@ -254,15 +261,15 @@
 </ul>
 <h2 id="大小寫的部分"><a href="#大小寫的部分" class="headerlink" title="大小寫的部分"></a>大小寫的部分</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toLowerCase</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a.toLowerCase()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">jsonLogic.add_operation(<span class="string">"lc"</span>, toLowerCase);</span><br></pre></td></tr></table></figure>
 <p>我在 JsonLogic 中新增了一個 operator — “lc” 來實作 .toLowerCase() ，每次比較字串的時候，先包上一層 lc 再來比較，以確保可以忽略大小寫，在下面可以看到例子。</p>
-<p>然而後端是用 <a href="https://github.com/yavuztor/JsonLogic.Net" target="_blank" rel="noopener">JsonLogic.NET</a> ，這套件並不是官方維護的，不確定大小寫的判定方式如何，也不確定是否支援上述新增 operator 的方法，有待討論過後再決定…</p>
+<p>然而後端是用 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lhdnV6dG9yL0pzb25Mb2dpYy5OZXQ=">JsonLogic.NET<i class="fa fa-external-link-alt"></i></span> ，這套件並不是官方維護的，不確定大小寫的判定方式如何，也不確定是否支援上述新增 operator 的方法，有待討論過後再決定…</p>
 <h2 id="startwith-跟-endwith-的部分"><a href="#startwith-跟-endwith-的部分" class="headerlink" title="startwith 跟 endwith 的部分"></a>startwith 跟 endwith 的部分</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="string">'startswith'</span>:</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="string">'=='</span>: [&#123;<span class="string">'lc'</span>: rule.value&#125;, &#123;<span class="string">'lc'</span>: &#123; <span class="string">'substr'</span>: [&#123; <span class="string">'var'</span>: rule.field &#125;, <span class="number">0</span>, rule.value.length] &#125;&#125;] &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="string">'doesnotstartwith'</span>:</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="string">'!='</span>: [&#123;<span class="string">'lc'</span>: rule.value&#125;, &#123;<span class="string">'lc'</span>: &#123; <span class="string">'substr'</span>: [&#123; <span class="string">'var'</span>: rule.field &#125;, <span class="number">0</span>, rule.value.length] &#125;&#125;] &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="string">'endswith'</span>:</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="string">'=='</span>: [&#123;<span class="string">'lc'</span>: rule.value&#125;, &#123;<span class="string">'lc'</span>: &#123; <span class="string">'substr'</span>: [&#123; <span class="string">'var'</span>: rule.field &#125;, -rule.value.length] &#125;&#125;] &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="string">'doesnotendwith'</span>:</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="string">'!='</span>: [&#123;<span class="string">'lc'</span>: rule.value&#125;, &#123;<span class="string">'lc'</span>: &#123; <span class="string">'substr'</span>: [&#123; <span class="string">'var'</span>: rule.field &#125;, -rule.value.length] &#125;&#125;] &#125;</span><br></pre></td></tr></table></figure>
 <p>運用 “substr” 將開頭或結尾與 Value 等字數的字串切下來進行 “==” 比較，完成 startwith 與 endwith。</p>
 <h2 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h2><ul>
-<li><a href="https://querybuilder.js.org/demo.html" target="_blank" rel="noopener">QueryBuilder</a></li>
-<li><a href="https://demos.telerik.com/kendo-ui/filter/index" target="_blank" rel="noopener">Kendo Filter Example</a></li>
-<li><a href="https://docs.telerik.com/kendo-ui/api/javascript/data/datasource/configuration/filter" target="_blank" rel="noopener">Kendo Filter API </a></li>
-<li><a href="http://jsonlogic.com/" target="_blank" rel="noopener">JsonLogic</a></li>
-<li><a href="https://github.com/ukrbublik/react-awesome-query-builder" target="_blank" rel="noopener">QueryBuilder to JsonLogic Example</a></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9xdWVyeWJ1aWxkZXIuanMub3JnL2RlbW8uaHRtbA==">QueryBuilder<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kZW1vcy50ZWxlcmlrLmNvbS9rZW5kby11aS9maWx0ZXIvaW5kZXg=">Kendo Filter Example<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnRlbGVyaWsuY29tL2tlbmRvLXVpL2FwaS9qYXZhc2NyaXB0L2RhdGEvZGF0YXNvdXJjZS9jb25maWd1cmF0aW9uL2ZpbHRlcg==">Kendo Filter API <i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cDovL2pzb25sb2dpYy5jb20v">JsonLogic<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3VrcmJ1Ymxpay9yZWFjdC1hd2Vzb21lLXF1ZXJ5LWJ1aWxkZXI=">QueryBuilder to JsonLogic Example<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
 
     </div>

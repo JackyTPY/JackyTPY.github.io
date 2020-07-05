@@ -31,11 +31,14 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/hv32G07.png">
 <meta property="article:published_time" content="2020-06-29T05:18:33.000Z">
-<meta property="article:modified_time" content="2020-06-29T05:18:33.000Z">
+<meta property="article:modified_time" content="2020-07-05T06:27:09.445Z">
 <meta property="article:author" content="Jacky Tseng">
-<meta property="article:tag" content="PWA">
-<meta property="article:tag" content="JavaScript">
-<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="vue">
+<meta property="article:tag" content=" pwa">
+<meta property="article:tag" content=" service">
+<meta property="article:tag" content=" worker">
+<meta property="article:tag" content=" sw">
+<meta property="article:tag" content=" js">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.imgur.com/hv32G07.png">
 
@@ -207,6 +210,13 @@
 
               <time title="創建時間：2020-06-29 13:18:33" itemprop="dateCreated datePublished" datetime="2020-06-29T13:18:33+08:00">2020-06-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-07-05 14:27:09" itemprop="dateModified" datetime="2020-07-05T14:27:09+08:00">2020-07-05</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -238,7 +248,7 @@
 </ul>
 <h1 id="Vue-原本的附加-pwa-機制"><a href="#Vue-原本的附加-pwa-機制" class="headerlink" title="Vue 原本的附加 pwa 機制"></a>Vue 原本的附加 pwa 機制</h1><p>Vue 專案在建立的時候可以選擇加入 PWA 的 plugin，<code>npm run build</code>之後就會自動依據你的設定生產出 PWA 需要的文本，包括 manifest.json 與 service-worker.js。</p>
 <p>Vue 用的是 google 開發的 workbox 來處理 precache 的部分，但因為pano 的情況比較特殊，所以在這裡 service-worker 的部分我就自己寫了。</p>
-<h1 id="manifest-的設定"><a href="#manifest-的設定" class="headerlink" title="manifest 的設定"></a>manifest 的設定</h1><p>manifest.json 是一份文件，用來定義 PWA 在下載到桌面的時候，名字與介面形式長怎樣，然而 iOS 是不吃 manifest.json 而是有不一樣的設定，這些網路上有很多資源可以看，在這邊就不贅述了，例如：<a href="https://medium.com/front-end-augustus-study-notes/pwa-minifest-6943b5fc65a9" target="_blank" rel="noopener">PWA學習筆記-4：manifest.json</a>。</p>
+<h1 id="manifest-的設定"><a href="#manifest-的設定" class="headerlink" title="manifest 的設定"></a>manifest 的設定</h1><p>manifest.json 是一份文件，用來定義 PWA 在下載到桌面的時候，名字與介面形式長怎樣，然而 iOS 是不吃 manifest.json 而是有不一樣的設定，這些網路上有很多資源可以看，在這邊就不贅述了，例如：<span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL2Zyb250LWVuZC1hdWd1c3R1cy1zdHVkeS1ub3Rlcy9wd2EtbWluaWZlc3QtNjk0M2I1ZmM2NWE5">PWA學習筆記-4：manifest.json<i class="fa fa-external-link-alt"></i></span>。</p>
 <p>在 vue.config.js 中，我們可以設定好 manifest 的相關設定，之後 build 起來的同時，Vue 會幫我們依照這裡的設定生成 manifest.json 以及 workbox 相關文件。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// ...other vue-cli plugin options...</span></span><br><span class="line">  pwa: &#123;</span><br><span class="line">    name: <span class="string">'My App'</span>,</span><br><span class="line">    themeColor: <span class="string">'#4DBA87'</span>,</span><br><span class="line">    msTileColor: <span class="string">'#000000'</span>,</span><br><span class="line">    appleMobileWebAppCapable: <span class="string">'yes'</span>,</span><br><span class="line">    appleMobileWebAppStatusBarStyle: <span class="string">'black'</span>,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果想要自己寫 service-worker.js</span></span><br><span class="line">    <span class="comment">// configure the workbox plugin</span></span><br><span class="line">    workboxPluginMode: <span class="string">'InjectManifest'</span>,</span><br><span class="line">    workboxOptions: &#123;</span><br><span class="line">      <span class="comment">// swSrc is required in InjectManifest mode.</span></span><br><span class="line">      swSrc: <span class="string">'src/service-worker.js'</span>,</span><br><span class="line">      <span class="comment">// ...other Workbox options...</span></span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 如果想要讓他自己生產</span></span><br><span class="line">    workboxPluginMode: <span class="string">'GenerateSW'</span>,</span><br><span class="line">    workboxOptions: &#123;</span><br><span class="line">      <span class="comment">// 不等待 terminated 直接取代舊的 service-worker</span></span><br><span class="line">      <span class="comment">// 解決無法自動更新的問題</span></span><br><span class="line">      skipWaiting: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -275,18 +285,18 @@
 
 <p>這是因為 Vue 有使用 Google 開發的 Workbox 套件，在 <code>npm run build</code>之後會自動把靜態檔案們的目錄編輯成一個 js 檔以進行快取。但是在這個專案中，環景資料必須要自己快取，因此我就刪掉了 workbox 的程式碼，用這個目錄自己跟 fetch 到的環景資料一起快取了。</p>
 <h1 id="一些有關於-PWA-in-iOS-的新資訊"><a href="#一些有關於-PWA-in-iOS-的新資訊" class="headerlink" title="一些有關於 PWA in iOS 的新資訊"></a>一些有關於 PWA in iOS 的新資訊</h1><ul>
-<li><a href="https://medium.com/@firt/whats-new-on-ios-12-2-for-progressive-web-apps-75c348f8e945" target="_blank" rel="noopener">What’s new on iOS 12.2 for Progressive Web Apps</a></li>
-<li><a href="https://medium.com/@firt/progressive-web-apps-in-2020-c15018c9931c" target="_blank" rel="noopener">Progressive Web Apps in 2020</a></li>
-<li><a href="https://medium.com/@firt/iphone-11-ipados-and-ios-13-for-pwas-and-web-development-5d5d9071cc49" target="_blank" rel="noopener">iPhone 11, iPadOS and iOS 13 for PWAs and web development</a></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BmaXJ0L3doYXRzLW5ldy1vbi1pb3MtMTItMi1mb3ItcHJvZ3Jlc3NpdmUtd2ViLWFwcHMtNzVjMzQ4ZjhlOTQ1">What’s new on iOS 12.2 for Progressive Web Apps<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BmaXJ0L3Byb2dyZXNzaXZlLXdlYi1hcHBzLWluLTIwMjAtYzE1MDE4Yzk5MzFj">Progressive Web Apps in 2020<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BmaXJ0L2lwaG9uZS0xMS1pcGFkb3MtYW5kLWlvcy0xMy1mb3ItcHdhcy1hbmQtd2ViLWRldmVsb3BtZW50LTVkNWQ5MDcxY2M0OQ==">iPhone 11, iPadOS and iOS 13 for PWAs and web development<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
 <blockquote>
-<p><img src="https://i.imgur.com/hv32G07.png" alt=""><br>New PWA Lifecycle on iOS 12.2 according to my testing. focus, blur and visibility events only happen when loaded over HTTPS.</p>
+<p><img data-src="https://i.imgur.com/hv32G07.png" alt=""><br>New PWA Lifecycle on iOS 12.2 according to my testing. focus, blur and visibility events only happen when loaded over HTTPS.</p>
 </blockquote>
 <p>Reference：</p>
 <ul>
-<li><a href="https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.InjectManifest#InjectManifest" target="_blank" rel="noopener">Workbox InjectManifest API</a></li>
-<li><a href="https://krpano.com/home/" target="_blank" rel="noopener">Krpano</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Service_Worker_API" target="_blank" rel="noopener">Service Worker API</a></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXJzLmdvb2dsZS5jb20vd2ViL3Rvb2xzL3dvcmtib3gvcmVmZXJlbmNlLWRvY3MvbGF0ZXN0L21vZHVsZS13b3JrYm94LXdlYnBhY2stcGx1Z2luLkluamVjdE1hbmlmZXN0I0luamVjdE1hbmlmZXN0">Workbox InjectManifest API<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9rcnBhbm8uY29tL2hvbWUv">Krpano<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIubW96aWxsYS5vcmcvemgtQ04vZG9jcy9XZWIvQVBJL1NlcnZpY2VfV29ya2VyX0FQSQ==">Service Worker API<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
 
     </div>
