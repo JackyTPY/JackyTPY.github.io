@@ -9,6 +9,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -23,7 +25,7 @@
   <meta name="description" content="最近開始使用 Vue 來作為前端開發的框架，但是關於 PWA 的部分， Vue 會動態依照設定的資料產生固定的 Manifest ， Service Worker 也是使用 Workbox 來自動產生，在一般使用情形下是很方便，但是如果要做到比如說動態 Manifest 設定的話就會很麻煩，於是我就又掉入一個坑了。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 Vue 中設定 PWA">
-<meta property="og:url" content="https://jackytpy.github.io/2020/06/29/Setting-PWA-in-Vue/index.html">
+<meta property="og:url" content="https://jackytpy.github.io/Setting-PWA-in-Vue/index.html">
 <meta property="og:site_name" content="下午三點的落地窗">
 <meta property="og:description" content="最近開始使用 Vue 來作為前端開發的框架，但是關於 PWA 的部分， Vue 會動態依照設定的資料產生固定的 Manifest ， Service Worker 也是使用 Workbox 來自動產生，在一般使用情形下是很方便，但是如果要做到比如說動態 Manifest 設定的話就會很麻煩，於是我就又掉入一個坑了。">
 <meta property="og:locale" content="zh_TW">
@@ -37,7 +39,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.imgur.com/hv32G07.png">
 
-<link rel="canonical" href="https://jackytpy.github.io/2020/06/29/Setting-PWA-in-Vue/">
+<link rel="canonical" href="https://jackytpy.github.io/Setting-PWA-in-Vue/">
 
 
 <script id="page-configurations">
@@ -180,7 +182,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://jackytpy.github.io/2020/06/29/Setting-PWA-in-Vue/">
+    <link itemprop="mainEntityOfPage" href="https://jackytpy.github.io/Setting-PWA-in-Vue/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -307,7 +309,7 @@
     <div class="post-nav">
       <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2020/06/29/Service-Worker/" rel="next" title="Service Worker 離線支援">
+    <a href="/Service-Worker/" rel="next" title="Service Worker 離線支援">
       Service Worker 離線支援 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -474,6 +476,31 @@
 
 
   
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
 
 
 

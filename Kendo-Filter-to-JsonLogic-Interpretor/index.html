@@ -9,6 +9,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -23,7 +25,7 @@
   <meta name="description" content="在工作上遇到前後端使用的邏輯套件不同，所以需要有一個方法把前端的 Kendo Filter 在後端轉換成 JsonLogic 存起來，於是就開始研究怎麼樣轉換比較好。 Github Repository">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kendo Filter to JsonLogic 轉譯器">
-<meta property="og:url" content="https://jackytpy.github.io/2020/06/29/Kendo-Filter-to-JsonLogic-Interpretor/index.html">
+<meta property="og:url" content="https://jackytpy.github.io/Kendo-Filter-to-JsonLogic-Interpretor/index.html">
 <meta property="og:site_name" content="下午三點的落地窗">
 <meta property="og:description" content="在工作上遇到前後端使用的邏輯套件不同，所以需要有一個方法把前端的 Kendo Filter 在後端轉換成 JsonLogic 存起來，於是就開始研究怎麼樣轉換比較好。 Github Repository">
 <meta property="og:locale" content="zh_TW">
@@ -35,7 +37,7 @@
 <meta property="article:tag" content="JsonLogic">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://jackytpy.github.io/2020/06/29/Kendo-Filter-to-JsonLogic-Interpretor/">
+<link rel="canonical" href="https://jackytpy.github.io/Kendo-Filter-to-JsonLogic-Interpretor/">
 
 
 <script id="page-configurations">
@@ -178,7 +180,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://jackytpy.github.io/2020/06/29/Kendo-Filter-to-JsonLogic-Interpretor/">
+    <link itemprop="mainEntityOfPage" href="https://jackytpy.github.io/Kendo-Filter-to-JsonLogic-Interpretor/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -282,7 +284,7 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/06/29/The-Method-To-Save-Objects-With-Console/" rel="prev" title="使用 console 來下載 JS 物件">
+    <a href="/The-Method-To-Save-Objects-With-Console/" rel="prev" title="使用 console 來下載 JS 物件">
       <i class="fa fa-chevron-left"></i> 使用 console 來下載 JS 物件
     </a></div>
       <div class="post-nav-item"></div>
@@ -450,6 +452,31 @@
 
 
   
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
 
 
 
